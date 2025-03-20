@@ -1,21 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
 export const Carousel = ({ images }) => {
-  /* You will need to  use  state to mnage the current image */
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  /* You will need to hanle the click on left and right button */
+  const handlePrevClick = () => {
+    // Go to the previous image, or loop to the last image if at the start
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
 
-  /* You will need to manage the cases when we are on the last image or first image*/
+  const handleNextClick = () => {
+    // Go to the next image, or loop to the first image if at the end
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   return (
     <div className="carousel">
-      <BsArrowLeftCircleFill className="arrow arrow-left" />
+      <BsArrowLeftCircleFill
+        className="arrow arrow-left"
+        onClick={handlePrevClick}
+      />
 
-      {/* YOu will need to display the current image, not the first one.. */}
-      <img src={images[0].src} alt={images[0].alt} className="slide" />
+      {/* Display the current image */}
+      <img
+        src={images[currentIndex].src}
+        alt={images[currentIndex].alt}
+        className="slide"
+      />
 
-      <BsArrowRightCircleFill className="arrow arrow-right" />
+      <BsArrowRightCircleFill
+        className="arrow arrow-right"
+        onClick={handleNextClick}
+      />
     </div>
   );
 };
